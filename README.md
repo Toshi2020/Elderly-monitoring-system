@@ -96,45 +96,49 @@
 ・アカウントの2段階認証を有効にしてアプリパスワードを取得。  
 ・ソースのAUTHOR_EMAILとAUTHOR_PASSWORDに設定する。  
 ・参考URL  
-ESP32でメール送信  
+>ESP32でメール送信  
 https://randol-news.net/mon/202309-1.html  
 
-ESP-Mail-Client  
+>ESP-Mail-Client  
 https://github.com/mobizt/ESP-Mail-Client  
 
-ESP32 Send Emails using an SMTP Server  
+>ESP32 Send Emails using an SMTP Server  
 https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/  
   
 **●ESPからGoogleスプレッドシートを読み書きするために**  
 ・Googleドライブにセンサとのやり取りをするスプレッドシートを作成。例えば"見守りセンサー"  
 ・スプレッドシートにリビング/廊下/勝手口/スマホ/温度/明度/設定の7枚のシートを作成。  
-![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/8253fba8-2aa3-4c64-8500-dceda52afd58)
+![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/5a84ed21-c624-4c95-864d-be6299fde984)
+
 
   
 ・設定以外のシートの1行目に"年月日＼時刻/0,1,,,23"を記述。表示/固定/1行でスクロール範囲を2行目以降とする。  
-![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/5adc4448-df96-4b07-aac6-ac566e674c78)
+![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/c399d865-2a1a-4839-b4b5-1cc849d65f71)
+
 
   
 ・スプレッドシートをオープンし、拡張機能/Apps Scriptで"GoogleSheetスクリプト.txt"の中身を貼り付ける。  
 ・参考URL  
-ESP8266/ESP32でGoogleSpreadSheetのセルを読む  
+>ESP8266/ESP32でGoogleSpreadSheetのセルを読む  
 https://qiita.com/DeepSpawn/items/f1ad2abaf18f1a419ae6  
 
-ESP8266/ESP32でGoogleSpreadSheetのセルを更新する  
+>ESP8266/ESP32でGoogleSpreadSheetのセルを更新する  
 https://qiita.com/DeepSpawn/items/2799a894f80a79b40974  
 
-スプレッドシートを開いたら自動的に最終行に移動してみる  
+>スプレッドシートを開いたら自動的に最終行に移動してみる  
 https://for-dummies.net/gas-noobs/move-to-the-last-data-cell-on-open-automatically/  
 
-[GAS]スプレッドシートの最終行にセルを移動  
+>[GAS]スプレッドシートの最終行にセルを移動  
 https://note.com/kawamura_/n/nb1865dfb3c77  
   
 ・スクリプト1行目のスプレッドシートIDは、ドライブでファイル"見守りセンサー"を右クリックし、"共有/リンクをコピー"した  
-https://docs.google.com/spreadsheets/d/～/edit?usp=drive_linkの～部分  
-・ソースコードのDeployUrl0はスプレッドシートをオープンし、デプロイ/新しいデプロイ/で、"次のユーザーとして実行"は"自分"、"アクセスできるユーザー"を"全員"としてデプロイを作成。ウェブアプリのURLの"https://script.google.com/macros/s/～/exec"をまるごとコピペ  
+"https://docs.google.com/spreadsheets/d/～/edit?usp=drive_link"
+の～部分  
+・ソースコードのDeployUrl0はスプレッドシートをオープンし、デプロイ/新しいデプロイ/で、"次のユーザーとして実行"は"自分"、"アクセスできるユーザー"を"全員"としてデプロイを作成。ウェブアプリのURLの"https://script.google.com/macros/s/～/exec"
+をまるごとコピペ  
 ・Googleスプレッドシートアクセス時には要求したURLがリダイレクトされるので、HTTPSRedirectライブラリを使ったがESP8266ではヒープ不足でクラッシュしてしまう。リダイレクト処理は以下のリンクを参考に自前で行う事とした。  
 ・参考URL  
-ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
+>ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
 https://note.com/rcat999/n/n179e5b71ebc9  
 
 ・WebアクセスにはDoGetとDoPostの2種類のメソッドがあるが、URLにパラメータをくっつけて送るDoGetを使っている。DoPostだとESP側のペイロード作成が視覚的にわかりづらかったので。  
@@ -142,7 +146,7 @@ https://note.com/rcat999/n/n179e5b71ebc9
   
 **●URLエンコード**  
 ・参考URL  
-URLエンコード  
+>URLエンコード  
 https://github.com/plageoj/urlencode/blob/master/src/UrlEncode.cpp  
   
 **●開発用UI**  
@@ -171,25 +175,25 @@ https://github.com/plageoj/urlencode/blob/master/src/UrlEncode.cpp
 ・ESP-01のシリアル出力は通常のデバッグ用文字出力と共用。センシング時には">SENS=1"または">SENS=2"の文字列を送り、ESP32側で受信した文字列の一致によりセンスしたことを判断する。  
 ・ESP8266でのESP-NOW送信ではピアリストへの登録は不要、ESP32では必要。  
 ・参考URL  
-ESP8266とESP32 温度測定にESP-NOWを使ってみる  
+>ESP8266とESP32 温度測定にESP-NOWを使ってみる  
 https://okiraku-camera.tokyo/blog/?p=7167  
 
-ESP-NOWを使ってみた【ESP32】  
+>ESP-NOWを使ってみた【ESP32】  
 https://it-evo.jp/blog/blog-1397/  
 
-ESPNOWの送受信関数群とサンプルです  
+>ESPNOWの送受信関数群とサンプルです  
 https://qiita.com/DeepSpawn/items/06b378eeef3b4a4ff0b0  
 
 **●BLEによる外部温度計(シャオミLYWSD03MMC)との通信**  
 ・当初リビングの温度検知としてセンサーLM35やMCP9700Aを組み込んでみたが、設置場所が部屋の上方であるのと本体の発熱の影響を受けて正確な室温が得られなかった。そこで外部温度計からBLEで温度を取得することにした。  
 ・参考URL  
-600円の温湿度計(LYWSD03MMC)とESP32でIoT  
+>600円の温湿度計(LYWSD03MMC)とESP32でIoT  
 https://momijimomimomi.com/makers/LYWSD03MMC_Thermo-Hygrometer_BLE_ESP32_Ambient.html  
 
-【Home AssistantでDIY Smart Home】Xiaomi四角温湿度計を改造！  
+>【Home AssistantでDIY Smart Home】Xiaomi四角温湿度計を改造！  
 https://maky-ba.hatenablog.com/entry/2021/06/18/215016  
 
-格安BLE温湿度計のデータをESP32で取得してみた  
+>格安BLE温湿度計のデータをESP32で取得してみた  
 https://qiita.com/kobayuta/items/947b69af6360d70d7f26  
 
 ・BLEを使う時はWiFiのスリープを禁止するとクラッシュする。(STAモードの場合WiFiスリープを禁止しないとESP-NOWで受信がドロップする)  
@@ -208,27 +212,29 @@ https://qiita.com/kobayuta/items/947b69af6360d70d7f26
 　となった。  
 ・微調整できるよう一律のオフセット補正も残してある。(シリアルコマンドまたはスプレッドシート)  
 ・参考URL  
-素子温度の計算方法  
+>素子温度の計算方法  
 https://www.rohm.co.jp/electronics-basics/transistors/tr_what7  
 
-Temperature Sensor  
+>Temperature Sensor  
 https://docs.espressif.com/projects/esp-idf/en/v4.4/esp32c3/api-reference/peripherals/temp_sensor.html  
 
 **●WiFiによるOTA**  
 ・参考URL  
-ESP32/ESP8266でネットワーク経由でスケッチを更新する  
+>ESP32/ESP8266でネットワーク経由でスケッチを更新する  
 https://programresource.net/2020/02/21/2916.html  
 
-OTA Updates  
+>OTA Updates  
 https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html  
   
 **●GoogleDriveに置いたバイナリファイルによる遠隔OTA**  
 ・参考URL  
-ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
+>ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
 https://note.com/rcat999/n/n179e5b71ebc9  
+
 ・拡張子.binのバイナリファイルはArduino IDEで「スケッチ/コンパイルしたバイナリを出力」でinoファイルのフォルダに出力される。  
 ・バイナリファイルをGoogleドライブにアップロードし、右クリックし"共有/リンクをコピー"で得られた  
-https://drive.google.com/file/d/～/view?usp=drive_linkの～部分をGoogleSpreadSheetの設定シートの"OTAファイルID"にコピーしておく。  
+"https://drive.google.com/file/d/～/view?usp=drive_link"
+の～部分をGoogleSpreadSheetの設定シートの"OTAファイルID"にコピーしておく。  
 ・設定シートの"OTAアップデート要求"を1にすると日付が変わった時にアップデートが行われる。  
   
 **●開発環境(Arduino IDE)**  
@@ -270,10 +276,11 @@ ESPping 最新ver 1.0.4
 ・デスクトップにarduino.exeのショートカットを3つ作成し、それぞれ名前をESP-01, ESP8266, ESP32と変更し、リンク先として先ほどのファイルを指定  
 	D:\Programs\Arduino1.8.19\arduino.exe --preferences-file C:\Users\ユーザー名\AppData\Local\Arduino15\preferences_XXX.txt  
 ・参考URL  
-	Arduino IDE でESP32のコンパイル時間を短縮する方法  
+>Arduino IDE でESP32のコンパイル時間を短縮する方法  
 	https://qiita.com/njm2360/items/c8a15047cde43617f6ce  
   
-	ArduinoIDEの便利技【技その１】起動時に設定を変える  
+>ArduinoIDEの便利技【技その１】起動時に設定を変える  
 	https://raspberrypi.mongonta.com/tips-arduinoide/  
+
 ・↑ではccacheを使うやり方が紹介されていて試してみたが、現在のCPUやdiskアクセスが充分速いためかあまり効果が感じられなかった。  
 ・ESP32のビルドで、たまに停止してしまうことがありprocexpで一連のJAVAのプロセスをdelして再コンパイルする必要があった。ソースの大幅改変後の初回ビルドで発生しやすい。  
