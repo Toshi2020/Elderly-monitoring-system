@@ -6,25 +6,30 @@
 ・モーションセンサーによる動きの検知が長時間途絶えたり、室温が高くなり過ぎたり、部屋の明かりがずっと点灯/消灯しているときに自動でメールが送られてきます。カメラによる監視などは行いません。  
   
 **●システム構成**  
-[システム構成.jpg]  
+![システム構成](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/00b36b0a-cde9-451b-bc9e-008c54eb5b8f)
+
 ・廊下と勝手口にモーションセンサーを持つ子機を設置、リビングにモーションセンサー、光センサー(CdS)を持つ親機を設置します。  
 ・親機はリビングに置かれた温度計とBLE通信により室温を取得します。  
 ・子機はWEMOS D1 mini(ESP8266)、親機はESP32C3 Super Mini + ESP-01(ESP8266)を使っています。  
-[取り付け風景.jpg]  
+![取り付け風景](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/b5d39023-37d9-434a-815e-dce9cba68c26)
+
   
 **●ハードウェア**  
 ・子機：WEMOS D1 miniにモーションセンサAM312を接続しただけのものです。動作確認用にLEDを追加しましたが、3Dプリントした白色のケースが光を透過することがわかったので、今思えばオンボードLEDを使えばよかったと思います。  
-[回路図子機.jpg]  
+![回路図子機](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/766df74d-7e1b-4f50-bf85-1a2d851b1e76)
+
   
 ・親機：ESP32C3 Super MiniとESP-01にCdSとモーションセンサAM312を接続しています。オンボードLEDが暗いので、LEDを追加しました。(子機とLEDの論理が逆になってしまった理由は思い出せません)  
-[回路図親機.jpg]  
+![回路図親機](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/a9362f4a-4822-4a06-a15d-e1cabc6c0cb6)
+
   
 ・LEDは親機子機ともにWiFi接続前は点滅、モーションセンサ出力がHの間は点灯、さらに親機に関しては子機が検知したら2回点滅します。  
 ・電源は子機親機共にUSB出力のACアダプタを使っています。よってACコンセントのある場所に設置することになります。  
   
 **●使用したモーションセンサについて**  
 ・入手可能なセンサとしては小型のAM312と、高感度のHC-SR501が出回っています。当初リビング用の親機は検知距離を稼げるようにHC-SR501を使用したのですが、WiFiの電波で誤検知が多発してしまい使い物にならなりませんでした。HC-SR501を使うならきちんとシールドするか、距離を離してレイアウトする必要がありそうです。  
-[モーションセンサ.jpg]  
+![モーションセンサ](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/33105a23-fd53-496c-86e4-fcf383571ce4)
+
   
 **●親機の仕様の変遷**  
 1X(初号機)：WEMOS D1 mini(ESP8266)+モーションセンサーのみ。  
@@ -103,10 +108,12 @@
 **●ESPからGoogleスプレッドシートを読み書きするために**  
 ・Googleドライブにセンサとのやり取りをするスプレッドシートを作成。例えば"見守りセンサー"  
 ・スプレッドシートにリビング/廊下/勝手口/スマホ/温度/明度/設定の7枚のシートを作成。  
-[スプレッドシート1.jpg]  
+![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/8253fba8-2aa3-4c64-8500-dceda52afd58)
+
   
 ・設定以外のシートの1行目に"年月日＼時刻/0,1,,,23"を記述。表示/固定/1行でスクロール範囲を2行目以降とする。  
-[スプレッドシート2.jpg]  
+![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/5adc4448-df96-4b07-aac6-ac566e674c78)
+
   
 ・スプレッドシートをオープンし、拡張機能/Apps Scriptで"GoogleSheetスクリプト.txt"の中身を貼り付ける。  
 ・参考URL  
@@ -140,7 +147,8 @@ https://docs.google.com/spreadsheets/d/～/edit?usp=drive_linkの～部分
 **●開発用UI**  
 ・センサーユニットとはUSB接続時は115200bpsのシリアル入出力だが、これを使うとシリアル開始時にESPにリセットがかかってしまう。  
 ・WiFiシリアルで動作を継続したまま入出力ができる。WindowsならRLogin、AndroidならSerial WiFi Terminalアプリが使いやすい。送受信の行末はCR+LFに設定。ホスト名は親機ならmimamori32.local、親機のサブボードならmimamoriESPNOW.local、子機ならmimamori_1.localやmimamori_2.localと接続。TCPポートはESP側のソフト側で設定するが、今は54321としている。  
-[WiFiシリアル.jpg]  
+![WiFiシリアル](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/461e4f80-eeaf-42f6-aefa-2a5e10b10ae5)
+
   
 ・DNSキャッシュのクリアはWindowsならcmdプロンプトで"ipconfig /flushdns"、Androidは端末再起動。  
 ・同名のホストを2つ起動するとホスト名の末尾に"_2"が付けられる。(WiFiルーター側仕様？)  
@@ -186,7 +194,8 @@ https://docs.google.com/spreadsheets/d/～/edit?usp=drive_linkの～部分
 ・BLEを使う時はWiFiのスリープを禁止するとクラッシュする。(STAモードの場合WiFiスリープを禁止しないとESP-NOWで受信がドロップする)  
 ・LYWSD03MMCは内蔵のCR2032で1年間稼働するとのことだが、外付けバッテリーでさらに長期間動作できるようにしてみた。  
 	https://www.thingiverse.com/thing:6513933  
-[温度計.jpg]  
+![温度計](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/1c8b3ec6-71e1-49f3-a6eb-a31e775af325)
+
   
 **●ESP32C3の内蔵温度センサーによる外気温の測定**  
 ・外部温度センサーの電池切れ時の対応や、火災に関しては部屋の上方に設置したセンサの方が素早く感知できると思われるのでESP32C3の内部温度センサーでも外気温を計測する。  
