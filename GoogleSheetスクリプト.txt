@@ -1,0 +1,86 @@
+// スプレッドシートID
+var id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+
+function onOpen() {
+	var ui = SpreadsheetApp.getUi();
+	ui.createMenu("ログ")
+	.addItem("データをクリア", "ClearData")
+	.addItem("全データをクリア", "AllClearData")
+	.addItem("データを選択", "SelectData")
+	.addToUi();
+
+	// 各データ記録シートの一番下の行を表示
+	var sheet, lastRaw
+	for (i = 5; i >= 0; i--) {
+		sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[i];
+		lastRow = sheet.getLastRow()
+		sheet.setCurrentCell(sheet.getRange(lastRow + 1, 1));
+	}
+}
+// データをクリア
+function ClearData() {
+	var sheet = SpreadsheetApp.getActiveSheet();
+	if (sheet.getSheetName() != "設定") {
+		sheet.deleteRows(2, sheet.getLastRow());
+	}
+}
+// 全データをクリア
+function AllClearData() {
+	var sheet, lastRaw
+	for (i = 5; i >= 0; i--) {
+		sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[i];
+		sheet.deleteRows(2, sheet.getLastRow());
+	}
+}
+// データを選択
+function SelectData() {
+	var sheet = SpreadsheetApp.getActiveSheet();
+	var lastRow = sheet.getLastRow();
+	var lastColumn = sheet.getLastColumn();
+	var range = sheet.getRange(2, 1, lastRow - 1, lastColumn);
+	range.activate();
+}
+// データの書き込み
+function doGet(e) {
+	// パラメータ取り出し
+	var command = e.parameter.command,
+		sheetname = e.parameter.sheetname,
+		val = e.parameter.val;
+	var spreadsheet = SpreadsheetApp.openById(id);
+	// 指定のシート
+	var sheet = spreadsheet.getSheetByName(sheetname);
+
+	// シートを読む
+	if (command == "read") {
+		try {
+			// 指定の範囲
+			var range = sheet.getRange(val);
+		} catch(e) {
+			console.log(e);
+			return ContentService.createTextOutput("error");
+		}
+		// 指定された範囲のデータを返す
+		return ContentService.createTextOutput(range.getValues());
+	}
+	// シートに書く
+	else if (command == "write") {
+		try {
+			// ','で分割
+			var dat = val.split(",")
+			if (dat.length == 2) {	// 要素が2つなら範囲とデータ
+				var range = sheet.getRange(dat[0]);	// 指定したセルに
+				range.setValue(dat[1]);				// 書き込み
+			}
+			else
+			{
+				// 時間ごとの統計データ
+				sheet.appendRow(dat);	// 最終行に追加
+			}
+		} catch(e) {
+			console.log(e);
+			return ContentService.createTextOutput("error");
+		}
+		return ContentService.createTextOutput("sccess");
+	}
+	return ContentService.createTextOutput("???");
+}
