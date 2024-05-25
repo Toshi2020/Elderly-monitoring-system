@@ -98,11 +98,11 @@
 ・参考URL  
 	ESP32でメール送信  
 	https://randol-news.net/mon/202309-1.html  
-  
-	ESP-Mail-Client  
+
+  	ESP-Mail-Client  
 	https://github.com/mobizt/ESP-Mail-Client  
-  
-	ESP32 Send Emails using an SMTP Server  
+
+   	ESP32 Send Emails using an SMTP Server  
 	https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/  
   
 **●ESPからGoogleスプレッドシートを読み書きするために**  
@@ -119,13 +119,13 @@
 ・参考URL  
 	ESP8266/ESP32でGoogleSpreadSheetのセルを読む  
 	https://qiita.com/DeepSpawn/items/f1ad2abaf18f1a419ae6  
-  
+
 	ESP8266/ESP32でGoogleSpreadSheetのセルを更新する  
 	https://qiita.com/DeepSpawn/items/2799a894f80a79b40974  
-  
+
 	スプレッドシートを開いたら自動的に最終行に移動してみる  
 	https://for-dummies.net/gas-noobs/move-to-the-last-data-cell-on-open-automatically/  
-  
+
 	[GAS]スプレッドシートの最終行にセルを移動  
 	https://note.com/kawamura_/n/nb1865dfb3c77  
   
@@ -172,25 +172,25 @@ https://docs.google.com/spreadsheets/d/～/edit?usp=drive_linkの～部分
 ・参考URL  
 	ESP8266とESP32 温度測定にESP-NOWを使ってみる  
 	https://okiraku-camera.tokyo/blog/?p=7167  
-  
+
 	ESP-NOWを使ってみた【ESP32】  
 	https://it-evo.jp/blog/blog-1397/  
-  
+
 	ESPNOWの送受信関数群とサンプルです  
 	https://qiita.com/DeepSpawn/items/06b378eeef3b4a4ff0b0  
-  
+
 **●BLEによる外部温度計(シャオミLYWSD03MMC)との通信**  
 ・当初リビングの温度検知としてセンサーLM35やMCP9700Aを組み込んでみたが、設置場所が部屋の上方であるのと本体の発熱の影響を受けて正確な室温が得られなかった。そこで外部温度計からBLEで温度を取得することにした。  
 ・参考URL  
 	600円の温湿度計(LYWSD03MMC)とESP32でIoT  
 	https://momijimomimomi.com/makers/LYWSD03MMC_Thermo-Hygrometer_BLE_ESP32_Ambient.html  
-  
+
 	【Home AssistantでDIY Smart Home】Xiaomi四角温湿度計を改造！  
 	https://maky-ba.hatenablog.com/entry/2021/06/18/215016  
-  
+
 	格安BLE温湿度計のデータをESP32で取得してみた  
 	https://qiita.com/kobayuta/items/947b69af6360d70d7f26  
-  
+
 ・BLEを使う時はWiFiのスリープを禁止するとクラッシュする。(STAモードの場合WiFiスリープを禁止しないとESP-NOWで受信がドロップする)  
 ・LYWSD03MMCは内蔵のCR2032で1年間稼働するとのことだが、外付けバッテリーでさらに長期間動作できるようにしてみた。  
 	https://www.thingiverse.com/thing:6513933  
@@ -209,15 +209,15 @@ https://docs.google.com/spreadsheets/d/～/edit?usp=drive_linkの～部分
 ・参考URL  
 	素子温度の計算方法  
 	https://www.rohm.co.jp/electronics-basics/transistors/tr_what7  
-  
+
 	Temperature Sensor  
 	https://docs.espressif.com/projects/esp-idf/en/v4.4/esp32c3/api-reference/peripherals/temp_sensor.html  
-  
+
 **●WiFiによるOTA**  
 ・参考URL  
 	ESP32/ESP8266でネットワーク経由でスケッチを更新する  
 	https://programresource.net/2020/02/21/2916.html  
-  
+
 	OTA Updates  
 	https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html  
   
