@@ -108,12 +108,32 @@ https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/
 **●ESPからGoogleスプレッドシートを読み書きするために**  
 ・Googleドライブにセンサとのやり取りをするスプレッドシートを作成。例えば"見守りセンサー"  
 ・スプレッドシートにリビング/廊下/勝手口/スマホ/温度/明度/設定の7枚のシートを作成。  
-![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/5a84ed21-c624-4c95-864d-be6299fde984)
-
-
-  
 ・設定以外のシートの1行目に"年月日＼時刻/0,1,,,23"を記述。表示/固定/1行でスクロール範囲を2行目以降とする。  
-![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/c399d865-2a1a-4839-b4b5-1cc849d65f71)
+![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/04ae1f8d-3ec1-496a-984f-cf79abe70257)
+
+
+
+・設定のシートA列&B列には  
+検出間隔[時間]  
+就寝時刻[時]  
+起床時刻[時]  
+メール0  
+メール1  
+メール2  
+初期化＆再起動要求  
+CdS利用  
+スマホ存在利用  
+熱中症警報温度[℃]  
+熱中症警報時間[分]  
+連続点灯注意時間[時]  
+連続消灯注意時間[時]  
+温度オフセット[℃]  
+明るさ判定A/D値  
+OTAファイルID  
+OTAアップデート要求  
+  
+![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/670cf8f4-31ee-46d4-9599-ae01564a56d9)
+
 
 
   
