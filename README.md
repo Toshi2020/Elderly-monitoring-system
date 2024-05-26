@@ -31,6 +31,10 @@
   
 **●使用したモーションセンサについて**  
 ・入手可能なセンサとしては小型のAM312と、高感度のHC-SR501が出回っています。当初リビング用の親機は検知距離を稼げるようにHC-SR501を使用したのですが、WiFiの電波で誤検知が多発してしまい使い物にならなりませんでした。HC-SR501を使うならきちんとシールドするか、距離を離してレイアウトする必要がありそうです。  
+・ちなみにESPからどれほど強い電波が出ているのかを  
+https://minkara.carview.co.jp/userid/3336538/blog/44912588/  
+の最後に書いた簡易型の電波検出器を当ててみたのですが、針はピクリとも動きませんでした。
+
 ![モーションセンサ](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/fb5ee7ac-5cc2-450b-b7fa-cd1aaa2735fd)
 
 
@@ -85,10 +89,10 @@
 ・ホットスタートであること自体もEEPROMに書き込むので、今回の起動がホットスタートであれば変数にEEPROMの内容をコピーし、コールドスタートの場合は変数をクリアします。  
   
 **●今回アップロードしたソフトウェア**  
-・mimamori4/　　親機のESP32C3のソースコードです  
-・mimamori4_sensor/　　子機のWEMOS D1のソースコードです  
-・mimamori4ESPNOW/　　親機のサブボードESP-01のソースコードです  
-・GoogleSheetスクリプト.txt　　Googleスプレッドシートのスクリプトです  
+・mimamori4/　　・・親機のESP32C3のソースコードです  
+・mimamori4_sensor/　　・・子機のWEMOS D1のソースコードです  
+・mimamori4ESPNOW/　　・・親機のサブボードESP-01のソースコードです  
+・GoogleSheetスクリプト.txt　　・・Googleスプレッドシートのスクリプトです  
   
 ・作りながら仕様を追加していったので特に親機に関しては美しいコードではないですが、部分的にでも参考になるようならばうれしく思います。  
 ・当初ESP8266でヒープを稼ぐために文字列リテラルをROMに置くためのFマクロを多用しています。ESP32なら不要でしょうがそのまま残してあります。  
@@ -159,14 +163,14 @@ https://note.com/kawamura_/n/nb1865dfb3c77
 ・スクリプト1行目のスプレッドシートIDは、ドライブでファイル"見守りセンサー"を右クリックし、"共有/リンクをコピー"した  
 "https://docs.google.com/spreadsheets/d/～/edit?usp=drive_link"
 の～部分  
-・ソースコードのDeployUrl0はスプレッドシートをオープンし、デプロイ/新しいデプロイ/で、"次のユーザーとして実行"は"自分"、"アクセスできるユーザー"を"全員"としてデプロイを作成。ウェブアプリのURLの"https://script.google.com/macros/s/～/exec"
-をまるごとコピペ  
-・Googleスプレッドシートアクセス時には要求したURLがリダイレクトされるので、HTTPSRedirectライブラリを使ったがESP8266ではヒープ不足でクラッシュしてしまう。リダイレクト処理は以下のリンクを参考に自前で行う事とした。  
+・ソースコードのDeployUrl0/1はスプレッドシートをオープンし、デプロイ/新しいデプロイ/で、"次のユーザーとして実行"は"自分"、"アクセスできるユーザー"を"全員"としてデプロイを作成し、ウェブアプリのURLの"https://script.google.com/macros/s/～/exec"
+をまるごとコピペ。  
+・Googleスプレッドシートアクセス時には要求したURLがリダイレクトされるので、HTTPSRedirectライブラリを使ったがESP8266ではヒープ不足で動作しないかクラッシュしてしまう。そこでリダイレクト処理は以下のリンクを参考に自前で行う事とした。  
 ・参考URL  
 >ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
 https://note.com/rcat999/n/n179e5b71ebc9  
 
-・WebアクセスにはDoGetとDoPostの2種類のメソッドがあるが、URLにパラメータをくっつけて送るDoGetを使っている。DoPostだとESP側のペイロード作成が視覚的にわかりづらかったので。  
+・WebアクセスにはDoGetとDoPostの2種類のメソッドがあるが、URLとパラメータを同時に送るDoGetを使っている。DoPostだとESP側のペイロード作成が視覚的にわかりづらかったので。  
 ・URLで日本語をパラメータとして送るためエンコード処理が必要。  
   
 **●URLエンコード**  
@@ -176,14 +180,14 @@ https://github.com/plageoj/urlencode/blob/master/src/UrlEncode.cpp
   
 **●開発用UI**  
 ・センサーユニットとはUSB接続時は115200bpsのシリアル入出力だが、これを使うとシリアル開始時にESPにリセットがかかってしまう。  
-・WiFiシリアルで動作を継続したまま入出力ができる。WindowsならRLogin、AndroidならSerial WiFi Terminalアプリが使いやすい。送受信の行末はCR+LFに設定。ホスト名は親機ならmimamori32.local、親機のサブボードならmimamoriESPNOW.local、子機ならmimamori_1.localやmimamori_2.localと接続。TCPポートはESP側のソフト側で設定するが、今は54321としている。  
+・WiFiシリアルを使えば動作を継続したまま入出力ができる。WindowsならRLogin、AndroidならSerial WiFi Terminalアプリが使いやすい。送受信の行末はCR+LFに設定。ホスト名は親機ならmimamori32.local、親機のサブボードならmimamoriESPNOW.local、子機ならmimamori_1.localやmimamori_2.localと接続。TCPポートはESP側のソフト側で設定するが、今は54321としている。  
 ![WiFiシリアル](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/461e4f80-eeaf-42f6-aefa-2a5e10b10ae5)
 
   
 ・DNSキャッシュのクリアはWindowsならcmdプロンプトで"ipconfig /flushdns"、Androidは端末再起動。  
 ・同名のホストを2つ起動するとホスト名の末尾に"_2"が付けられる。(WiFiルーター側仕様？)  
 ・実際に割り振られたホスト名とIPアドレスは、ArduinoIDEで"ツール/シリアルポート"で確認できる。  
-・親機/子機ともに"?↓"で設定コマンド一覧と今の設定が表示される。(↓はエンター)  
+・親機/子機ともに"?↓"で今の設定と設定コマンド一覧が表示される。(↓はエンター)  
 ・子機では#1(廊下用)で"-b1↓"、#2(勝手口用)で"-b2↓"でセンサー番号を設定しておく。  
 ・親機ではいくつかの設定項目はスプレッドシートでも設定できる(ただしスプレッドシートからの反映は日付が変わった時)。その他開発用のテスト機能も実行できる。  
 ・メールライブラリなど、内部からUSBシリアルに直接送っている情報はWiFiシリアルでは表示されない。  
