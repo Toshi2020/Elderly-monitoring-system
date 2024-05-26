@@ -229,7 +229,8 @@ https://qiita.com/kobayuta/items/947b69af6360d70d7f26
 ・BLEを使う時はWiFiのスリープを禁止するとクラッシュする。(STAモードの場合WiFiスリープを禁止しないとESP-NOWで受信がドロップする)  
 ・LYWSD03MMCは内蔵のCR2032で1年間稼働するとのことだが、外付けバッテリーでさらに長期間動作できるようにしてみた。  
 	https://www.thingiverse.com/thing:6513933  
-![温度計](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/1c8b3ec6-71e1-49f3-a6eb-a31e775af325)
+![温度計](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/8a4c49ab-4e32-40bd-83a1-730db44a060f)
+
 
   
 **●ESP32C3の内蔵温度センサーによる外気温の測定**  
