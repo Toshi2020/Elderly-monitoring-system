@@ -181,7 +181,7 @@ https://github.com/plageoj/urlencode/blob/master/src/UrlEncode.cpp
 **●開発用UI**  
 ・センサーユニットとはUSB接続時は115200bpsのシリアル入出力だが、これを使うとシリアル開始時にESPにリセットがかかってしまう。  
 ・WiFiシリアルを使えば動作を継続したまま入出力ができる。WindowsならRLogin、AndroidならSerial WiFi Terminalアプリが使いやすい。送受信の行末はCR+LFに設定。ホスト名は親機ならmimamori32.local、親機のサブボードならmimamoriESPNOW.local、子機ならmimamori_1.localやmimamori_2.localと接続。TCPポートはESP側のソフト側で設定するが、今は54321としている。  
-・ESP側ではSerial.printとClient.printを同時に行うマクロを用意した。
+・ESP側ではSerial.printとClient.printを同時に行うマクロを用意した。  
 ![WiFiシリアル](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/461e4f80-eeaf-42f6-aefa-2a5e10b10ae5)
 
   
