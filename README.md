@@ -6,7 +6,8 @@
 ・モーションセンサーによる動きの検知が長時間途絶えたり、室温が高くなり過ぎたり、部屋の明かりがずっと点灯/消灯しているときに自動でメールが送られてきます。カメラによる監視などは行いません。  
   
 **●システム構成**  
-![システム構成](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/00b36b0a-cde9-451b-bc9e-008c54eb5b8f)
+![システム構成L](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/282dd7f7-c3b9-425b-b73d-95ade0f36a08)
+
 
 ・廊下と勝手口にモーションセンサーを持つ子機を設置、リビングにモーションセンサー、光センサー(CdS)を持つ親機を設置します。  
 ・親機はリビングに置かれた温度計とBLE通信により室温を取得します。  
@@ -21,6 +22,8 @@
   
 ・親機：ESP32C3 Super MiniとESP-01にCdSとモーションセンサAM312を接続しています。オンボードLEDが暗いので、LEDを追加しました。(子機とLEDの論理が逆になってしまった理由は思い出せません)  
 ![回路図親機](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/a9362f4a-4822-4a06-a15d-e1cabc6c0cb6)
+![親機外観](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/1a8d9789-afa3-48db-aa60-14e3edb7bdd5)
+
 
   
 ・LEDは親機子機ともにWiFi接続前は点滅、モーションセンサ出力がHの間は点灯、さらに親機に関しては子機が検知したら2回点滅します。  
@@ -28,7 +31,8 @@
   
 **●使用したモーションセンサについて**  
 ・入手可能なセンサとしては小型のAM312と、高感度のHC-SR501が出回っています。当初リビング用の親機は検知距離を稼げるようにHC-SR501を使用したのですが、WiFiの電波で誤検知が多発してしまい使い物にならなりませんでした。HC-SR501を使うならきちんとシールドするか、距離を離してレイアウトする必要がありそうです。  
-![モーションセンサ](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/33105a23-fd53-496c-86e4-fcf383571ce4)
+![モーションセンサ](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/fb5ee7ac-5cc2-450b-b7fa-cd1aaa2735fd)
+
 
   
 **●親機の仕様の変遷**  
@@ -81,15 +85,15 @@
 ・ホットスタートであること自体もEEPROMに書き込むので、今回の起動がホットスタートであれば変数にEEPROMの内容をコピーし、コールドスタートの場合は変数をクリアします。  
   
 **●今回アップロードしたソフトウェア**  
-・mimamori4						親機のESP32C3のソースコードです  
-・mimamori4_sensor				子機のWEMOS D1のソースコードです  
-・mimamori4ESPNOW				親機のサブボードESP-01のソースコードです  
-・GoogleSheetスクリプト.txt		Googleスプレッドシートのスクリプトです  
+・mimamori4/　　親機のESP32C3のソースコードです  
+・mimamori4_sensor/　　子機のWEMOS D1のソースコードです  
+・mimamori4ESPNOW/　　親機のサブボードESP-01のソースコードです  
+・GoogleSheetスクリプト.txt　　Googleスプレッドシートのスクリプトです  
   
 ・作りながら仕様を追加していったので特に親機に関しては美しいコードではないですが、部分的にでも参考になるようならばうれしく思います。  
 ・当初ESP8266でヒープを稼ぐために文字列リテラルをROMに置くためのFマクロを多用しています。ESP32なら不要でしょうがそのまま残してあります。  
   
-**★★★備忘録＆参考リンク(以下は開発中のメモに加筆した物です)★★★**  
+**★★★★★★備忘録＆参考リンク(以下は開発中のメモに加筆した物です)★★★★★★**  
   
 **●ESPからG-mailでメールを送信するために**  
 ・見守りセンサ用のGoogleアカウントを新たに作成。  
@@ -109,11 +113,12 @@ https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/
 ・Googleドライブにセンサとのやり取りをするスプレッドシートを作成。例えば"見守りセンサー"  
 ・スプレッドシートにリビング/廊下/勝手口/スマホ/温度/明度/設定の7枚のシートを作成。  
 ・設定以外のシートの1行目に"年月日＼時刻/0,1,,,23"を記述。表示/固定/1行でスクロール範囲を2行目以降とする。  
-![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/04ae1f8d-3ec1-496a-984f-cf79abe70257)
+![スプレッドシート1](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/ca94c7fa-86e1-4b27-8458-774e95c9b5b3)
 
 
 
-・設定のシートA列&B列には  
+
+・設定のシートA列に以下の項目を、B列には設定値を書き込む。親機では項目名をサーチしておらず場所を決め打ちしているので並びを変えたらESP側のプログラムを変更する必要がある。  
 検出間隔[時間]  
 就寝時刻[時]  
 起床時刻[時]  
@@ -131,8 +136,8 @@ CdS利用
 明るさ判定A/D値  
 OTAファイルID  
 OTAアップデート要求  
-  
-![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/670cf8f4-31ee-46d4-9599-ae01564a56d9)
+![スプレッドシート2](https://github.com/Toshi2020/Elderly-monitoring-system/assets/81674805/4305da0a-3668-4c9e-bd7f-c07544f63dda)
+
 
 
 
@@ -225,11 +230,10 @@ https://qiita.com/kobayuta/items/947b69af6360d70d7f26
 **●ESP32C3の内蔵温度センサーによる外気温の測定**  
 ・外部温度センサーの電池切れ時の対応や、火災に関しては部屋の上方に設置したセンサの方が素早く感知できると思われるのでESP32C3の内部温度センサーでも外気温を計測する。  
 ・内部温度センサーはほぼジャンクション温度Tjを計測しているとするなら、  
-  周辺温度Ta = Tj - Rth・P   ここでRth=熱抵抗、P=消費電力  
-  P=平均すれば一定、Rthは周辺空気の自然対流を考慮するとTjとTaの温度差に影響を受けると考えられる。  
+　周辺温度Ta = Tj - Rth・P   ここでRth=熱抵抗、P=消費電力  
+　P=平均すれば一定、Rthは周辺空気の自然対流を考慮するとTjとTaの温度差に影響を受けると考えられる。  
 　完成したユニットを3Dプリンタのベッド上で容器を被せて加熱して実測したところ、  
-　オフセット分RthP = mapf(Tj, 60.0, 90.0, 55, 61)  
-　となった。  
+　オフセット分RthP = mapf(Tj, 60.0, 90.0, 55, 61) となった。  
 ・微調整できるよう一律のオフセット補正も残してある。(シリアルコマンドまたはスプレッドシート)  
 ・参考URL  
 >素子温度の計算方法  
@@ -245,7 +249,9 @@ https://programresource.net/2020/02/21/2916.html
 
 >OTA Updates  
 https://arduino-esp8266.readthedocs.io/en/latest/ota_updates/readme.html  
-  
+
+・ArduinoIDEより書き込み先をWiFiホストとしてOTAを行う。パスワードはWiFiの物をそのまま使っている。  
+
 **●GoogleDriveに置いたバイナリファイルによる遠隔OTA**  
 ・参考URL  
 >ESP32 オンライン OTAを実装してみた (Googleドライブ使用)  
@@ -256,6 +262,7 @@ https://note.com/rcat999/n/n179e5b71ebc9
 "https://drive.google.com/file/d/～/view?usp=drive_link"
 の～部分をGoogleSpreadSheetの設定シートの"OTAファイルID"にコピーしておく。  
 ・設定シートの"OTAアップデート要求"を1にすると日付が変わった時にアップデートが行われる。  
+・Googleドライブではファイルをアップデートしても置き換えを選択すればファイルIDが変わらないことが分かったので、IDはプログラム側に埋め込んでおいた方が良かったかもしれない。  
   
 **●開発環境(Arduino IDE)**  
 ・環境設定で追加のボードマネージャ―を設定  
@@ -264,37 +271,37 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 ・ESP8266 BoardsとESP32 Arduinoを組み込む。  
 **★ツール設定**  
 ・ESP8266(WEMOS D1 mini)  
-	ボード:LOLIN(WEMOS)D1 R2 & mini  
-	Flash Size:4MB(FD:2MB OTA:～1019KB)  
+　　ボード:LOLIN(WEMOS)D1 R2 & mini  
+　　Flash Size:4MB(FD:2MB OTA:～1019KB)  
 ・ESP-01  
-	ボード:Generic ESP8266 Module  
-	Flash Size:1MB(FD:64KB OTA:～470KB)  
+　　ボード:Generic ESP8266 Module  
+　　Flash Size:1MB(FD:64KB OTA:～470KB)  
 ・ESP32C3(Super Mini)  
-	ボード:ESP32C3 Dev Module  
-	USB CDC On Boot:"Enabled"を選択(USBシリアル出力を有効にするため)  
-	CPU Frequency:"80MHz(WiFi)"を選択(発熱を少しでも減少させるため)  
-	Partition Scheme:"MinimalSPIFFS(1.9MB APP with OTA/190kB SPIFFS))"を選択  
-	(プログラムサイズが大きいのでDefaultでは入らないため)  
+　　ボード:ESP32C3 Dev Module  
+　　USB CDC On Boot:"Enabled"を選択(USBシリアル出力を有効にするため)  
+　　CPU Frequency:"80MHz(WiFi)"を選択(発熱を少しでも減少させるため)  
+　　Partition Scheme:"MinimalSPIFFS(1.9MB APP with OTA/190kB SPIFFS))"を選択  
+　　(プログラムサイズが大きいのでDefaultでは入らないため)  
   
 **★インストールしたライブラリ**  
 ・Mail  
-ESP Mail Client by Mobizt 最新ver 3.4.16  
+　　ESP Mail Client by Mobizt 最新ver 3.4.16  
 ・ping  
-ESPping 最新ver 1.0.4  
+　　ESPping 最新ver 1.0.4  
   
 **★コンパイル時間の短縮**  
 ・ArduinoIDEではでそのままでは毎回全ライブラリのリビルドが行われ、特にESP32ではコンパイルに時間がかかり過ぎるので以下の処理を行う。  
 ・C:\ユーザー\ユーザー名\AppData\Local\Arduino15\preferences.txtを同じ場所にコピーして、  
-	preferences_esp-01.txt  
-	preferences_esp8266.txt  
-	preferences_esp32.txt  
+　　preferences_esp-01.txt  
+　　preferences_esp8266.txt  
+　　preferences_esp32.txt  
 にリネーム。  
 ・それぞれのファイルに以下の行を追加。(build.pathがすでに存在していたら編集)  
-	build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp-01  
-	build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp8266  
-	build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp32  
+　　build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp-01  
+　　build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp8266  
+　　build.path=C:\Users\ユーザー名\AppData\Local\Temp\ArduinoBuild\esp32  
 ・デスクトップにarduino.exeのショートカットを3つ作成し、それぞれ名前をESP-01, ESP8266, ESP32と変更し、リンク先として先ほどのファイルを指定  
-	D:\Programs\Arduino1.8.19\arduino.exe --preferences-file C:\Users\ユーザー名\AppData\Local\Arduino15\preferences_XXX.txt  
+　　D:\Programs\Arduino1.8.19\arduino.exe --preferences-file C:\Users\ユーザー名\AppData\Local\Arduino15\preferences_XXX.txt  
 ・参考URL  
 >Arduino IDE でESP32のコンパイル時間を短縮する方法  
 	https://qiita.com/njm2360/items/c8a15047cde43617f6ce  
