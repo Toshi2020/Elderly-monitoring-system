@@ -316,5 +316,5 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 >ArduinoIDEの便利技【技その１】起動時に設定を変える  
 	https://raspberrypi.mongonta.com/tips-arduinoide/  
 
-・↑ではccacheを使うやり方が紹介されていて試してみたが、現在のCPUやdiskアクセスが充分速いためかあまり効果が感じられなかった。  
+・↑ではccacheを使うやり方が紹介されていて試してみたが、コンパイル速度とキャッシュ検索の速度に差がないためかあまり効果が感じられなかった。  
 ・ESP32のビルドで、たまに停止してしまうことがありprocexpで一連のJAVAのプロセスをdelして再コンパイルする必要があった。ソースの大幅改変後の初回ビルドで発生しやすい。  
